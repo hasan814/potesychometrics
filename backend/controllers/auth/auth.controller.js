@@ -2,10 +2,11 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import User from "../../models/use.model.js";
 import jwt from "jsonwebtoken";
+import { errorHandler } from "../../utils/error.js";
 
 dotenv.config();
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   if (
@@ -16,12 +17,12 @@ export const signup = async (req, res) => {
     email === "" ||
     password === ""
   )
-    return res.status(400).json({ message: "All fields are required" });
+    next(errorHandler(400, "All fields are required!"));
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      next(errorHandler(400, "User already exists"));
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -42,6 +43,6 @@ export const signup = async (req, res) => {
 
     res.status(201).json({ result: newUser, token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    next(error);
   }
 };
