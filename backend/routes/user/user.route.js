@@ -1,4 +1,4 @@
-import { test } from "../controllers/user.controller.js";
+import { test } from "../../controllers/user/user.controller.js";
 
 import express from "express";
 
