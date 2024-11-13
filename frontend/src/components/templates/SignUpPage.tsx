@@ -32,7 +32,6 @@ const SignUpPage: React.FC = () => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
       if (response.ok) {
         toast.success("Sign up Successfully");
         navigate("/sign-in");
@@ -50,7 +49,7 @@ const SignUpPage: React.FC = () => {
 
   // ============== Rendering ====================
   return (
-    <div className="min-h-screen mt-20">
+    <div>
       <div className="gap-5 flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center">
         <div className="flex-1">
           <Link
@@ -103,6 +102,12 @@ const SignUpPage: React.FC = () => {
               </Button>
             )}
           </form>
+          <div className="flex gap-2 text-sm mt-5">
+            <span>Have an account?</span>
+            <Link to={"/sign-in"} className="text-blue-500">
+              Sign In
+            </Link>
+          </div>
         </div>
       </div>
     </div>
